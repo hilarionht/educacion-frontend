@@ -1,0 +1,43 @@
+<div class="card">
+    <div class="card-header">
+        Alta de persona
+    </div>
+    <div class="card-body">
+
+        <form #userForm="ngForm" (ngSubmit)="addPerson()">
+            <input type="hidden" name="_id" #_id="ngModel" [(ngModel)]="person.id">
+            <div class="form-row">
+                <div class="col-md-4 mb-3">
+                    <label for="validationDefault01">Nombre</label>
+                    <input type="text" class="form-control" name="nombre" #name="ngModel" [(ngModel)]="person.lasname" placeholder="Nombre Completo" required>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="validationDefault02">Apellido</label>
+                    <input type="text" class="form-control" name="apellido" #name="ngModel" [(ngModel)]="person.firstname" placeholder="Apellido" required>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="validationDefault02">Direccion</label>
+                    <input type="text" class="form-control" name="direccion" #name="ngModel" [(ngModel)]="person.address" placeholder="direccion" required>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label for="validationDefault02">Codigo Postl</label>
+                    <input type="text" class="form-control" name="postal_code" #name="ngModel" [(ngModel)]="person.postalcode" placeholder="telefono" required>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="validationDefault02">Correo</label>
+                    <input type="text" class="form-control" name="correo" #name="ngModel" [(ngModel)]="person.email" placeholder="email" required>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="validationDefault02">Localidad</label>
+                    <input type="text" class="form-control" name="locality" #name="ngModel" [(ngModel)]="person.locality" placeholder="email" required>
+                </div>
+
+            </div>
+
+            <button class="btn btn-primary" type="submit">Guardar</button>
+        </form>
+
+
+    </div>
+</div>

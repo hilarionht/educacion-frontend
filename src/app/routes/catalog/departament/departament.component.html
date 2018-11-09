@@ -1,0 +1,87 @@
+<div class="content-heading">
+    <div>Administracion de Departamentos
+        <small>Lista de Departamentos</small></div>
+</div>
+<div class="card card-default">
+    <div class="card-header">Lista de Departamentos</div>
+    <!-- START table-responsive-->
+    <div class="row">
+        <div class="col-md-8">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover table-responsive" id="table-ext-1">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>NOMBRE</th>
+                            <th>FECHA ALTA</th>
+                            <th>MODIFICADO</th>
+                            <th>
+                                <!-- <button [routerLink]="['/catalog/department', '0']" type="button" class=" btn btn-outline-success btn-sm">+</button> -->
+                                <button type="button" class="btn btn-sm btn-primary" (click)="add();"><i class="fa fa-plus-square"></i></button>
+                                <!-- <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#departmentModal" (click)="add();"> -->
+                                <!-- <i class="fa fa-plus-square"></i>
+                            </button> -->
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let department of departments; let i = index ">
+                            <td>{{ department.id }}</td>
+                            <td>{{ department.name }}</td>
+                            <td>{{ department.createdAt | date : 'dd-MM-yyyy' }}</td>
+                            <td>{{ department.updatedAt | date : 'dd-MM-yyyy' }}</td>
+                            <td>
+                                <!-- <button [routerLink]="['/config/department', department.id]" type="button" class="fa fa-edit btn btn-outline-success btn-sm"> </button>
+                            <a (click)="editRole(department)" class="btn btn-sm btn-primary">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                            <a (click)="deleteRole(department)" class="btn btn-sm btn-danger">
+                                <i class="fa fa-trash"></i>
+                            </a> -->
+                                <a (click)="edit(department)">
+                                    <i class="btn btn-sm btn-success">Editar</i>
+                                </a>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <!-- START card-->
+            <form #departmentForm="ngForm" (ngSubmit)="save(departmentForm)">
+                <input type="hidden" name="id" #id="ngModel" [(ngModel)]="department.id">
+                <div class="card card-default">
+                    <div class="card-header">DEPARTAMENTO</div>
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <label class="col-xl-3 col-form-label">PROVINCIA</label>
+                            <select class="col-xl-9 form-control" name="province_id" id="province_id" [(ngModel)]="department.province_id">
+                                <option selected>Selecciones</option>
+                                <option *ngFor="let prov of provincs" [value]="prov.id">
+                                    {{ prov.name }}
+                                  </option>
+                              </select>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-xl-3 col-form-label">NOMBRE</label>
+                            <div class="col-xl-9">
+                                <input class="form-control" type="text" placeholder="DEPARTAMENTO" name="name" #name="ngModel" [(ngModel)]="department.name" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-xl-3 col-form-label"></label>
+                            <div class="col-xl-9">
+                                <button class="btn btn-primary" type="submit">Guardar</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+            <!-- END card-->
+        </div>
+    </div>
+</div>

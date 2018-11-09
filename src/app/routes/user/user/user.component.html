@@ -1,0 +1,46 @@
+<div class="card">
+    <div class="card-header">
+        Alta de Usuario
+    </div>
+    <div class="card-body">
+
+        <form #userForm="ngForm" (ngSubmit)="addUser(userForm)">
+            <input type="hidden" name="id" #id="ngModel" [(ngModel)]="user.id">
+            <div class="form-row">
+
+                <div class="col-md-4 mb-3">
+                    <label for="validationDefaultUsername">Username</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroupPrepend2"><i class="fa fa-user"></i></span>
+                        </div>
+                        <input type="text" class="form-control" name="username" #name="ngModel" [(ngModel)]="user.username" placeholder="Username" aria-describedby="inputGroupPrepend2" required>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label for="validationDefault03">Password</label>
+                    <input type="password" class="form-control" name="password" #name="ngModel" [(ngModel)]="user.password" required>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="validationDefault04">Estado</label>
+                    <input type="text" class="form-control" name="state" #name="ngModel" [(ngModel)]="user.state" placeholder="estado" required>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="validationDefault05">Rol</label>
+                    <!-- <input type="text" class="form-control custom-select-sm" name="role_id" #name="ngModel" [(ngModel)]="user.role_id" placeholder="rol" required> -->
+                    <select class="custom-select  form-control" name="role_id" id="role_id" [(ngModel)]="user.role_id">
+                        <option selected>Selecciones</option>
+                        <option *ngFor="let rol of roles" [value]="rol.id">
+                            {{ rol.name }}
+                          </option>
+                      </select>
+                </div>
+
+            </div>
+            <button class="btn btn-primary" type="submit">Guardar</button>
+        </form>
+
+
+    </div>
+</div>
