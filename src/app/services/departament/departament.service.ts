@@ -28,10 +28,16 @@ export class DepartamentService {
         this.toastr.success( department.name , 'departmento Exitosa!',{ timeOut: 3000,positionClass: 'toast-top-right'});
         return res.department;
       }).catch( err => {
-        console.log(err, 'error en backend');
-        this.toastr.warning( err.error.errors.message , 'Error en generar la departmento!',{ timeOut: 3000,positionClass: 'toast-top-right'});
+        console.log(err.error.message);
+        let errorcause = err.error.message;
+        if(errorcause.indexOf("Ya existe la llave")){
+          this.toastr.warning( "NO SE PUEDE CREAR DEPARTAMENTO CON EL NOMBRE: " + department.name.toUpperCase() +" YA EXISTENTE" , 'CREACION DE DEPARTAMENTO',{ timeOut: 3000,positionClass: 'toast-top-right'});
+        }
+        else{
+          this.toastr.warning( "NO SE PUEDE CREAR DEPARTAMENTO CON EL NOMBRE: " + department.name.toUpperCase() , 'CREACION DE DEPARTAMENTO',{ timeOut: 3000,positionClass: 'toast-top-right'});
+        }
         return Observable.throw( err );
-      });;
+      });
   }
   update( department: Department ) {
 
@@ -42,6 +48,10 @@ export class DepartamentService {
                 .map( (resp: any) => {
                   this.toastr.success( resp.nombre, 'departmento Actualizado!',{ timeOut: 3000,positionClass: 'toast-top-right'});
                   return true;
+                }).catch( err => {
+                  console.log(err.error.message);
+                  this.toastr.warning( "NO SE PUEDE ACTUALIZAR DEPARTAMENTO CON EL NOMBRE: " + department.name.toUpperCase() , 'ACTUALIZACION DE DEPARTAMENTO',{ timeOut: 3000,positionClass: 'toast-top-right'});
+                  return Observable.throw( err );
                 });
 
   }
@@ -56,15 +66,28 @@ export class DepartamentService {
     let url = URL_SERVICIOS + '/department/' + id;
     //url += '?token=' + this.token;
     return this.http.delete( url ,  { headers:new HttpHeaders().append('Authorization', `Bearer ${  localStorage.getItem('token') }`) } )
-                .map( resp => {
+                .map( (resp:any) => {
                   this.toastr.success( 'El departmento a sido eliminado correctamente', 'departmento BORRADO!',{ timeOut: 3000,positionClass: 'toast-top-right'});
-                  return true;
+                  return resp.success;
+                }).catch( err => {
+                  console.log(err.error.message, 'error en backend');
+                  this.toastr.error( "NO SE PUEDE ELIMINAR EL REGISTRO CONSULTE CON SU ADMINSTRADOR!" , 'ELIMINACION DE DEPARTAMENTO',{ timeOut: 3000,positionClass: 'toast-top-right'});
+                  return Observable.throw( err );
                 });
 
   }
   
   list( desde: number = 0 ) {
     let url = URL_SERVICIOS + '/department';//?desde=' + desde;
+    return this.http.get( url, { headers:new HttpHeaders().append('Authorization', `Bearer ${  localStorage.getItem('token') }`)} );
+  }
+  listbyProvince( id: string ) {
+    console.log(id);
+    
+    let url = URL_SERVICIOS + '/province/';//?desde=' + desde;
+    url+= `?filter={"where":{"id":${ id }},"relations":["departments"]}`;
+    console.log(url);
+    
     return this.http.get( url, { headers:new HttpHeaders().append('Authorization', `Bearer ${  localStorage.getItem('token') }`)} );
   }
 }

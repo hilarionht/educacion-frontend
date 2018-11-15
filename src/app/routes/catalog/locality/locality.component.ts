@@ -1,8 +1,10 @@
+import { Department } from './../../../models/departament.model';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Locality } from '../../../models/locality.model';
-import { LocalityService } from '../../../services/service.index';
-import { Router } from '@angular/router';
+import { LocalityService, DepartamentService, ProvinceService } from '../../../services/service.index';
+import { Router, ActivatedRoute } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-locality',
@@ -12,23 +14,37 @@ import { Router } from '@angular/router';
 export class LocalityComponent implements OnInit {
 
   
-  localitys: Locality[] = [];
+  localities: Locality[] = [];
   display:string ="none";
   locality: Locality;
   id:any;
-
-
+  depatmentid:string;
+  department: Department;
   constructor(
-    public _provService: LocalityService,
-    public router: Router
+    public _depService: DepartamentService,
+    public _provService: ProvinceService,
+    public _localityService: LocalityService,
+    public routeActivate: ActivatedRoute,
+    public router: Router,
+    private modalService: NgbModal
 
-  ) { }
+  ) { 
+    this.routeActivate.params.subscribe( param => {
+      this.id = param['id'];
+      this.depatmentid = this.id;
+      console.log(this.id);
+      if(this.id){
+        this.getLocalitys();
+      }
+      
+    });
+  }
 
   ngOnInit() {
-    this._provService.list().subscribe((resp:any) => {
-      this.localitys = resp.entities;
-    });
-    this.locality  = new Locality(null,'0');
+    // this._provService.list().subscribe((resp:any) => {
+    //   this.localitys = resp.entities;
+    // });
+    this.locality  = new Locality(null,this.depatmentid,'0');
   }
   add(){
     let date = new Date();
@@ -42,33 +58,69 @@ export class LocalityComponent implements OnInit {
   save(form?: NgForm) {
     
     
-    if(form.value.id==='0') {
-      this._provService.update(form.value)
+    if(form.value.id!='0') {
+      form.value.name = form.value.name.toUpperCase();
+      this._localityService.update(form.value)
       .subscribe(res => {
         this.resetForm(form);
         this.getLocalitys();
       });
     } else {
-      this._provService.create(form.value)
+      form.value.name = form.value.name.toUpperCase();
+      this._localityService.create(form.value)
         .subscribe(res => {
           this.resetForm(form);
           this.getLocalitys();
         });
     }
-    
+    this.modalService.dismissAll(this.CloseModal);
+  }
+  delete(id:string){
+    this._localityService.delete(id).subscribe((resp:any)=> {  this.getLocalitys();
+    });
   }
   getLocalitys(){
-    this._provService.list().subscribe((resp:any) => {
-      this.localitys = resp.entities as Locality[];
+    this._localityService.listbyDepartment(this.depatmentid).subscribe((resp:any) => {
+      this.locality= resp.data[0];
+      console.log(resp);
+          this.department = resp.data[0];
+          this.localities = resp.data[0].localities;
     });
   }
   close(){
     this.display = 'none';
+  }
+  
+  editbyid(content,id:string) {
+    this.locality = new Locality(null,this.depatmentid,"0");
+    if(id){
+      this._localityService.get(id).subscribe((resp:any)=> this.locality = resp.data);
+    }
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title',  backdropClass: 'light-blue-backdrop'}).result.then((result) => {
+      //this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      //this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
   }
   resetForm(form?: NgForm) {
     if (form) {
       form.reset();
       //this.getUsers();
     }
+  }
+  open(content,id:string) {
+    this.locality = new Locality(null,this.depatmentid,"0");
+    if(id!="0"){
+      this._localityService.get(id).subscribe((resp:any)=> this.locality = resp.data);
+    }
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title',  backdropClass: 'light-blue-backdrop'}).result.then((result) => {
+      //this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      //this.closeResult = `Dismissed ${ this.getDismissReason(reason) }`;
+    });
+  }
+  CloseModal(data:string, form?:NgForm){
+    console.log(form.value);
+    this.modalService.dismissAll(this.CloseModal);
   }
 }

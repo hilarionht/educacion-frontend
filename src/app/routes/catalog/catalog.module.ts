@@ -22,8 +22,8 @@ const routes: Routes = [
   { path: 'sector', component: SectorComponent , canActivate: [LoginGuard]},
   { path: 'ambit', component: AmbitComponent , canActivate: [LoginGuard]},
   { path: 'catalog', component: CatalogComponent , canActivate: [LoginGuard]},
-  { path: 'departament', component: DepartamentComponent , canActivate: [LoginGuard]},
-  { path: 'locality', component: LocalityComponent , canActivate: [LoginGuard]}
+  { path: 'department/:id', component: DepartamentComponent , canActivate: [LoginGuard]},
+  { path: 'locality/:id', component: LocalityComponent , canActivate: [LoginGuard]}
 ];
 
 @NgModule({
@@ -38,7 +38,10 @@ const routes: Routes = [
     RegionComponent, 
     SectorComponent, 
     AmbitComponent, 
-    InstitutionComponent, CatalogComponent, DepartamentComponent, LocalityComponent
+    InstitutionComponent, 
+    CatalogComponent, 
+    DepartamentComponent, 
+    LocalityComponent
   ],
   exports: [
     RouterModule

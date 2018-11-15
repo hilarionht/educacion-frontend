@@ -19,11 +19,11 @@ export class LocalityService {
     console.log(' create locality: ',locality);
     return this.http.post(url, locality ,  { headers:new HttpHeaders().append('Authorization', `Bearer ${  localStorage.getItem('token') }`)})
       .map((res: any) => {
-        this.toastr.success( locality.name , 'locality Exitosa!',{ timeOut: 3000,positionClass: 'toast-top-right'});
+        this.toastr.success("LOCALIAD CREADA CON EXITO!\n" +  locality.name, "Creacion de Localidad" , { enableHtml:true, timeOut: 3000, positionClass: 'toast-top-right'});
         return res.locality;
       }).catch( err => {
         console.log(err);
-        this.toastr.warning( err.error.errors.message , 'Error en generar la locality!',{ timeOut: 3000,positionClass: 'toast-top-right'});
+        this.toastr.warning('Error en generar la localidad!', "Creacion de Localidad" , { timeOut: 3000,positionClass: 'toast-top-right'});
         return Observable.throw( err );
       });;
   }
@@ -34,7 +34,7 @@ export class LocalityService {
     
     return this.http.put( url, locality ,  { headers:new HttpHeaders().append('Authorization', `Bearer ${  localStorage.getItem('token') }`) } )
                 .map( (resp: any) => {
-                  this.toastr.success( resp.nombre, 'locality Actualizado!',{ timeOut: 3000,positionClass: 'toast-top-right'});
+                  this.toastr.success( resp.nombre, 'locality Actualizado!',{ timeOut: 3000, positionClass: 'toast-top-right' });
                   return true;
                 });
 
@@ -53,12 +53,25 @@ export class LocalityService {
                 .map( resp => {
                   this.toastr.success( 'El locality a sido eliminado correctamente', 'locality BORRADO!',{ timeOut: 3000,positionClass: 'toast-top-right'});
                   return true;
+                }).catch( err => {
+                  console.log(err.error.message, 'error en backend');
+                  this.toastr.warning( "NO SE PUEDE ELIMINAR EL REGISTRO CONSULTE CON SU ADMINSTRADOR!" , 'ELIMINACION DE LOCALIDAD',{ timeOut: 3000,positionClass: 'toast-top-right'});
+                  return Observable.throw( err );
                 });
 
   }
   
   list( desde: number = 0 ) {
     let url = URL_SERVICIOS + '/locality';//?desde=' + desde;
+    return this.http.get( url, { headers:new HttpHeaders().append('Authorization', `Bearer ${  localStorage.getItem('token') }`)} );
+  }
+  listbyDepartment( id: string ) {
+    console.log(id);
+    
+    let url = URL_SERVICIOS + '/department/';//?desde=' + desde;
+    url+= `?filter={"where":{"id":${ id }},"relations":["localities"]}`;
+    console.log(url);
+    
     return this.http.get( url, { headers:new HttpHeaders().append('Authorization', `Bearer ${  localStorage.getItem('token') }`)} );
   }
 }

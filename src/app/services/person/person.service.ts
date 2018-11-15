@@ -24,7 +24,7 @@ export class PersonService {
         return res.person;
       }).catch( err => {
         console.log(err);
-        this.toastr.warning( err.error.errors.message , 'Error en generar la person!',{ timeOut: 3000,positionClass: 'toast-top-right'});
+        this.toastr.warning( err.error.message , 'Error en generar la person!',{ timeOut: 3000,positionClass: 'toast-top-right'});
         return Observable.throw( err );
       });;
   }

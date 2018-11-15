@@ -6,8 +6,8 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { TranslateService, TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+//import { ToastModule } from 'ng2-toastr/ng2-toastr';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppComponent } from './app.component';
 
 import { CoreModule } from './core/core.module';
@@ -30,11 +30,13 @@ export function createTranslateLoader(http: HttpClient) {
     ],
     imports: [
         HttpClientModule,
-        BrowserAnimationsModule, // required for ng2-tag-input
+        //BrowserAnimationsModule, // required for ng2-tag-input
         CoreModule,
         LayoutModule,
         SharedModule.forRoot(),
         ToastrModule.forRoot(),
+        //ToastModule.forRoot(),
+        BrowserAnimationsModule,
         NgbModule,
         RoutesModule,
         ServiceModule,

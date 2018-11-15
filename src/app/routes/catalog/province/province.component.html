@@ -7,7 +7,7 @@
     <div class="col-xl-12">
         <!-- START card-->
         <div class="card card-default ">
-            <div class="card-header bg-purple">Provincias</div>
+            <div class="card-header">Provincias</div>
             <div class="card-body">
                 <!-- START table-responsive-->
                 <div class="table-responsive">
@@ -15,10 +15,10 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>NOMBRE</th>
+                                <th>NOMBRE &nbsp;&nbsp;&nbsp;</th>
                                 <th>FECHA DE ALTA</th>
                                 <th>MODIFICADO</th>
-                                <th>&nbsp; <button type="button" class="btn btn-sm btn-outline-primary" (click)="open(content,0)" data-toggle="tooltip" data-placement="top" title="AÑADIR UN NUEVO ROL"><i class="fa fa-plus-square" ></i></button>
+                                <th>&nbsp; <button type="button" class="btn btn-sm btn-outline-primary" (click)="open(content,0)" data-toggle="tooltip" data-placement="top" title="AÑADIR MAS PROVINCIAS"><i class="fa fa-plus-square" ></i></button>
                                 </th>
                             </tr>
                         </thead>
@@ -29,11 +29,16 @@
                                 <td>{{ province.createdAt | date : 'dd-MM-yyyy' }}</td>
                                 <td>{{ province.updatedAt | date : 'dd-MM-yyyy' }}</td>
                                 <td>
-                                    <a (click)="delete(province.id)" class="btn btn-sm btn-outline-danger">
-                                        <i class="fa fa-trash"></i>
-                                    </a>
-                                    <a (click)="editbyid(content,province.id)" class="btn btn-sm btn-outline-success">
+                                    <a (click)="editbyid(content,province.id)" class="btn btn-sm btn-outline-success" data-toggle="tooltip" data-placement="top" title="EDITAR">
                                         <i class="fa fa-edit"></i>
+                                    </a>
+                                    <a (click)="department(province.id);" class="btn btn-sm btn-outline-info" data-toggle="tooltip" data-placement="top" title="DETALLE">
+                                        <i class="fa fa-list-alt"></i>
+                                    </a>
+                                    <!-- <button [routerLink]="['/catalog/department', province.id]" type="button" class="fa fa-edit btn btn-outline-success btn-sm"> </button> -->
+
+                                    <a (click)="delete(province.id)" class="btn btn-sm btn-outline-danger" data-toggle="tooltip" data-placement="top" title="ELIMINAR">
+                                        <i class="fa fa-trash"></i>
                                     </a>
                                 </td>
                             </tr>
@@ -62,7 +67,7 @@
                     <div class="col-md-12">
                         <label for="name">Nombre</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" name="name" #name="ngModel" [(ngModel)]="province.name" placeholder="Nombre de provincia" uppercase aria-describedby="inputGroupPrepend2" required>
+                            <input type="text" class="form-control" name="name" #name="ngModel" [(ngModel)]="province.name" placeholder="INGRESE PROVINCIA" aria-describedby="inputGroupPrepend2" required>
                         </div>
                     </div>
                 </div>

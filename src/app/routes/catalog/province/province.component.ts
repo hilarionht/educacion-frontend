@@ -45,12 +45,14 @@ export class ProvinceComponent implements OnInit {
     
     
     if(form.value.id!='0') {
+      form.value.name = form.value.name.toUpperCase();
       this._provService.update(form.value)
       .subscribe(res => {
         this.resetForm(form);
         this.getProvinces();
       });
     } else {
+      form.value.name = form.value.name.toUpperCase();
       this._provService.create(form.value)
         .subscribe(res => {
           this.resetForm(form);
@@ -81,6 +83,10 @@ export class ProvinceComponent implements OnInit {
   delete(id:string){
     this._provService.delete(id).subscribe((resp:any)=> { console.log(resp); this.getProvinces();
     });
+  
+  }
+  department(id:string) {
+   this.router.navigate(['catalog/department', id]);
   }
   editbyid(content,id:string) {
     this.province = new Province(null,'0',null,null)
@@ -99,9 +105,9 @@ export class ProvinceComponent implements OnInit {
       this._provService.get(id).subscribe((resp:any)=> this.province = resp.data);
     }
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title',  backdropClass: 'light-blue-backdrop'}).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
+      //this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
-      this.closeResult = `Dismissed ${ this.getDismissReason(reason) }`;
+      //this.closeResult = `Dismissed ${ this.getDismissReason(reason) }`;
     });
   }
   

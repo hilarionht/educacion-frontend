@@ -37,6 +37,7 @@ import { ModalUploadComponent } from '../components/modal-upload/modal-upload.co
 import { PipesModule } from '../pipes/pipes.module';
 
 import { DataTableModule } from "angular-6-datatable";
+import { from } from 'rxjs';
 
 // https://angular.io/styleguide#!#04-10
 @NgModule({
@@ -66,6 +67,8 @@ import { DataTableModule } from "angular-6-datatable";
         NgbModule,
         DataTableModule,
         ToasterModule,
+        
+        
         PipesModule
     ],
     providers: [
