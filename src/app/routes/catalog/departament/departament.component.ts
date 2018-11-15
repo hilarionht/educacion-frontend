@@ -97,6 +97,9 @@ export class DepartamentComponent implements OnInit {
   close(){
     this.display = 'none';
   }
+  returnback(){
+      this.router.navigate(['catalog/province', this.province.id]);
+  }
 
   locality(id:string) {
     this.router.navigate(['catalog/locality', id]);
