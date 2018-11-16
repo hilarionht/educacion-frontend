@@ -29,7 +29,7 @@ export class ProvinceService {
         //this.toastr.success( 'Provincia ' + province.name  + " fue creado con exito!", "CREACION DE PROVINCIA" ,{ enableHtml:true, timeOut: 3000,positionClass: 'toast-top-right'});
         return res.province;
       }).catch( err => {
-        console.log(err.error.message);
+        // console.log(err.error.message);
         let errorcause = err.error.message;
         if(errorcause.indexOf("Ya existe la llave")){
           this.toastr.error( "NO SE PUEDE CREAR UN PROVINCIA CON EL NOMBRE: " + province.name.toUpperCase() + " YA EXISTENTE" , 'CREACION DE PROVINCIA',{ timeOut: 3000,positionClass: 'toast-top-right',closeButton:true});
@@ -44,7 +44,6 @@ export class ProvinceService {
   update( province: Province ) {
 
     let url = URL_SERVICIOS + '/province';
-    console.log(url);
     
     return this.http.put( url, province ,  { headers:new HttpHeaders().append('Authorization', `Bearer ${  localStorage.getItem('token') }`) } )
                 .map( (resp: any) => {
@@ -68,7 +67,7 @@ export class ProvinceService {
                   this.toastr.success( 'La Provincia a sido eliminado correctamente', 'Provincia BORRADO!',{ timeOut: 3000,positionClass: 'toast-top-right'});
                   return true;
                 }).catch( err => {
-                  console.log(err.error.message, 'error en backend');
+                  // console.log(err.error.message, 'error en backend');
                   this.toastr.warning( "NO SE PUEDE ELIMINAR EL REGISTRO CONSULTE CON SU ADMINSTRADOR!" , 'ELIMINACION DE PROVINCIA',{ timeOut: 3000,positionClass: 'toast-top-right'});
                   return Observable.throw( err );
                 });

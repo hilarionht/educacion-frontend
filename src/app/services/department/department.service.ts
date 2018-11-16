@@ -20,13 +20,11 @@ export class DepartmentService {
   ) { }
   create( departament: Department ) {
     let url = URL_SERVICIOS + '/departament';
-    console.log(' create departament: ',departament);
     return this.http.post(url, departament ,  { headers:new HttpHeaders().append('Authorization', `Bearer ${  localStorage.getItem('token') }`)})
       .map((res: any) => {
         this.toastr.success( departament.name , 'departament Exitosa!',{ timeOut: 3000,positionClass: 'toast-top-right'});
         return res.departament;
       }).catch( err => {
-        console.log(err);
         this.toastr.warning( err.error.errors.message , 'Error en generar la departament!',{ timeOut: 3000,positionClass: 'toast-top-right'});
         return Observable.throw( err );
       });;
@@ -34,7 +32,6 @@ export class DepartmentService {
   update( departament: Department ) {
 
     let url = URL_SERVICIOS + '/departament';
-    console.log(url);
     
     return this.http.put( url, departament ,  { headers:new HttpHeaders().append('Authorization', `Bearer ${  localStorage.getItem('token') }`) } )
                 .map( (resp: any) => {

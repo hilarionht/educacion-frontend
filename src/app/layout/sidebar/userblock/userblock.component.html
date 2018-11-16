@@ -2,7 +2,8 @@
     <!-- User picture-->
     <div class="user-block-picture">
         <div class="user-block-status">
-            <img class="img-thumbnail rounded-circle" [src]="userService.user.image" alt="FotoPerfil" />
+            <img *ngIf="userService.user.image" class="img-thumbnail rounded-circle" [src]="userService.user.image" alt="FotoPerfil" />
+            <img *ngIf="!userService.user.image" class="img-thumbnail rounded-circle" src="assets/img/user/02.jpg" alt="FotoPerfil" />
             <div class="circle bg-success circle-lg"></div>
         </div>
     </div>

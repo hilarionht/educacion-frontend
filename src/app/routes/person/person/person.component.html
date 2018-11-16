@@ -83,11 +83,10 @@
                             <label class="col-md-2 col-form-label">Povincia</label>
                             <div class="col-md-10">
 
-                                <select class="custom-select custom-select-sm">
+                                <select class="custom-select custom-select-sm" name="locality" #name="ngModel" [(ngModel)]="person.province">
                                                     <option selected="">Seleccione</option>
                                                     <option value="1">One</option>
-                                                    <option value="2">Two</option>
-                                                    <option value="3">Three</option>
+                                              
                                                 </select>
 
                             </div>
@@ -98,7 +97,7 @@
                             <label class="col-md-2 col-form-label">Departamento</label>
                             <div class="col-md-10">
 
-                                <select class="custom-select custom-select-sm">
+                                <select class="custom-select custom-select-sm" name="department" #name="ngModel" [(ngModel)]="person.department">
                                                         <option selected="">Seleccione</option>
                                                         <option value="1">One</option>
                                                         <option value="2">Two</option>
@@ -113,7 +112,7 @@
                             <label class="col-md-2 col-form-label">Localidad</label>
                             <div class="col-md-10">
 
-                                <select class="custom-select custom-select-sm">
+                                <select class="custom-select custom-select-sm" name="locality" #name="ngModel" [(ngModel)]="person.locality">
                                                             <option selected="">Seleccione</option>
                                                             <option value="1">One</option>
                                                             <option value="2">Two</option>

@@ -22,7 +22,7 @@ export class PersonComponent implements OnInit {
 
   localitys: Locality[] = [];
   departaments : Department[] = [];
-  province: Province[] = [];
+  provinces: Province[] = [];
 
   constructor(
     public _localityService: LocalityService,
@@ -35,7 +35,7 @@ export class PersonComponent implements OnInit {
   ) {
     this.routeActivate.params.subscribe( param => {
       this.id = param['id'];
-      this.person = new Person(null,null,null,null,null,null,null,null,this.id);
+      this.person = new Person(null,null,null,null,null,null,null,null,null,null,null,this.id);
       if(this.id !== '0'){
         this.personService.get(this.id).subscribe((pers:any) => {
           this.person = pers;
@@ -43,7 +43,7 @@ export class PersonComponent implements OnInit {
         } );
       }
       this._provinceService.list().subscribe((resp:any)=>{
-        this.province = resp.data;
+        this.provinces= resp.data;
       });
     });
 

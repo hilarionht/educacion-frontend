@@ -3,7 +3,7 @@
         <small>Lista de Localidades</small></div>
 </div>
 <!-- START table-responsive-->
-<div class="row">
+<div class="row" *ngIf="department">
     <div class="col-xl-12">
         <div class="card card-default">
             <div class="card-header primary">Localidades de {{ department.name }}</div>

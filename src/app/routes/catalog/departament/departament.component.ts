@@ -35,10 +35,10 @@ export class DepartamentComponent implements OnInit {
     this.routeActivate.params.subscribe( param => {
       this.id = param['id'];
       this.provinceid = this.id;
-      console.log(this.id);
+      // console.log(this.id);
       if(this.id){
         this._depService.listbyProvince(this.id).subscribe( (resp:any)=> {
-          console.log(resp.data[0]);
+          // console.log(resp.data[0]);
           this.province= resp.data[0];
           this.departments = resp.data[0].departments;
         });
@@ -87,7 +87,7 @@ export class DepartamentComponent implements OnInit {
     this.modalService.dismissAll(this.CloseModal);
   }
   getDepartaments(){
-    console.log(this.provinceid);
+    // console.log(this.provinceid);
     
     this._depService.listbyProvince(this.provinceid).subscribe((resp:any) => {
       this.province= resp.data[0];
@@ -105,7 +105,9 @@ export class DepartamentComponent implements OnInit {
     this.router.navigate(['catalog/locality', id]);
    }
    delete(id:string){
-    this._depService.delete(id).subscribe((resp:any)=> { console.log(resp); this.getDepartaments();
+    this._depService.delete(id).subscribe((resp:any)=> { 
+      // console.log(resp); 
+      this.getDepartaments();
     });
   
   }
@@ -139,7 +141,7 @@ export class DepartamentComponent implements OnInit {
     });
   }
   CloseModal(data:string, form?:NgForm){
-    console.log(form.value);
+    // console.log(form.value);
     
     this.modalService.dismissAll(this.CloseModal);
   }

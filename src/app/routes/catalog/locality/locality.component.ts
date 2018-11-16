@@ -32,7 +32,6 @@ export class LocalityComponent implements OnInit {
     this.routeActivate.params.subscribe( param => {
       this.id = param['id'];
       this.depatmentid = this.id;
-      console.log(this.id);
       if(this.id){
         this.getLocalitys();
       }
@@ -82,9 +81,8 @@ export class LocalityComponent implements OnInit {
   getLocalitys(){
     this._localityService.listbyDepartment(this.depatmentid).subscribe((resp:any) => {
       this.locality= resp.data[0];
-      console.log(resp);
-          this.department = resp.data[0];
-          this.localities = resp.data[0].localities;
+      this.department = resp.data[0];
+      this.localities = resp.data[0].localities;
     });
   }
   close(){
@@ -120,7 +118,6 @@ export class LocalityComponent implements OnInit {
     });
   }
   CloseModal(data:string, form?:NgForm){
-    console.log(form.value);
     this.modalService.dismissAll(this.CloseModal);
   }
 }

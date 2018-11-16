@@ -11,6 +11,8 @@ export class Person{
         public state: string,
         public birthday: string,
         public locality?: string,
+        public department?: string,
+        public province?: string,
         public id?: string
     ) {
 

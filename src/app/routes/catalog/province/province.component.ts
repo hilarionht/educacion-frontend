@@ -62,7 +62,7 @@ export class ProvinceComponent implements OnInit {
     this.modalService.dismissAll(this.CloseModal);
   }
   CloseModal(data:string, form?:NgForm){
-    console.log(form.value);
+    // console.log(form.value);
     
     this.modalService.dismissAll(this.CloseModal);
   }
@@ -81,7 +81,8 @@ export class ProvinceComponent implements OnInit {
     }
   }
   delete(id:string){
-    this._provService.delete(id).subscribe((resp:any)=> { console.log(resp); this.getProvinces();
+    this._provService.delete(id).subscribe((resp:any)=> { 
+      // console.log(resp); this.getProvinces();
     });
   
   }
@@ -112,7 +113,7 @@ export class ProvinceComponent implements OnInit {
   }
   
   private getDismissReason(reason: any,form?: NgForm): string {
-    console.log('form:  ', form);
+    // console.log('form:  ', form);
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';
     } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
