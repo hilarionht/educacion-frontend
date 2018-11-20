@@ -51,7 +51,7 @@ export class RolesComponent implements OnInit {
       this.roles = resp.data;
       this.ng2TableRoles = resp.data;
       this.data = resp.data;
-      console.log(this.ng2TableRoles);
+      // console.log(this.ng2TableRoles);
       
     });
     this.role  = new Role(null,'0');
@@ -161,7 +161,8 @@ public changeFilter(data: any, config: any): any {
   }
   save(form?: NgForm) {
     
-    console.log('saving.... ',form.value);
+    // console.log('saving.... ',form.value);
+    form.value.name = form.value.name.toUpperCase();
     if(form.value.id!=0) {
       this._rolService.update(form.value)
       .subscribe(res => {
@@ -221,7 +222,7 @@ public changeFilter(data: any, config: any): any {
   editbyid(content,id:string) {
     this.role = new Role(null,'0',null,null)
     if(id){
-      this._rolService.get(id).subscribe((resp:any)=> this.role = resp);
+      this._rolService.get(id).subscribe((resp:any)=> {this.role = resp.data; });
     }
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title',  backdropClass: 'light-blue-backdrop'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;

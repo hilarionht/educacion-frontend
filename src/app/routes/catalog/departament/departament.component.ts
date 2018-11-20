@@ -34,6 +34,8 @@ export class DepartamentComponent implements OnInit {
 
     this.routeActivate.params.subscribe( param => {
       this.id = param['id'];
+      console.log(param);
+      
       this.provinceid = this.id;
       // console.log(this.id);
       if(this.id){
@@ -97,12 +99,12 @@ export class DepartamentComponent implements OnInit {
   close(){
     this.display = 'none';
   }
-  returnback(){
-      this.router.navigate(['catalog/province', this.province.id]);
+  provinces(){
+      this.router.navigate(['/catalog/provinc']);
   }
 
   locality(id:string) {
-    this.router.navigate(['catalog/locality', id]);
+    this.router.navigate(['catalog/locality', id,this.provinceid]);
    }
    delete(id:string){
     this._depService.delete(id).subscribe((resp:any)=> { 

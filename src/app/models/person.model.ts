@@ -4,15 +4,15 @@ export class Person{
     constructor(
         public lasname: string,
         public firstname: string,
-        public identity_document: string,
+        public identityDocument: string,
         public email: string,
         public address:string,
-        public postalcode: string,
-        public state: string,
+        public postalCode: string,
         public birthday: string,
         public locality?: string,
         public department?: string,
-        public province?: string,
+        public province?: string,   
+        public state?: boolean,
         public id?: string
     ) {
 

@@ -23,16 +23,14 @@ export class PersonService {
         this.toastr.success( person.firstname + ' ' + person.lasname , 'person Exitosa!',{ timeOut: 3000,positionClass: 'toast-top-right'});
         return res.person;
       }).catch( err => {
-        console.log(err);
-        this.toastr.warning( err.error.message , 'Error en generar la person!',{ timeOut: 3000,positionClass: 'toast-top-right'});
+        // console.log( err.error.message);
+        this.toastr.warning( 'Error en generar la person!',"ERROR AL GUARDAR PERSONA" ,{ timeOut: 3000,positionClass: 'toast-top-right'});
         return Observable.throw( err );
       });;
   }
   update( person: Person ) {
 
     let url = URL_SERVICIOS + '/person';
-    console.log(url);
-    
     return this.http.put( url, person ,  { headers:new HttpHeaders().append('Authorization', `Bearer ${  localStorage.getItem('token') }`) } )
                 .map( (resp: any) => {
                   this.toastr.success( resp.nombre, 'person Actualizado!',{ timeOut: 3000,positionClass: 'toast-top-right'});
@@ -46,10 +44,14 @@ export class PersonService {
     return this.http.get( url, { headers:new HttpHeaders().append('Authorization', `Bearer ${  localStorage.getItem('token') }`)} )
                     .map(resp => resp);
   }
-
+  getById(id: string){
+    let url = URL_SERVICIOS + '/person/';
+    url +=`?filter={"relations":["locality", "locality.department","locality.department.province"],"where":{"id":${ id }}}`;
+    return this.http.get( url, { headers:new HttpHeaders().append('Authorization', `Bearer ${  localStorage.getItem('token') }`)} )
+                    .map(resp => resp);
+  }
   delete( id: string ) {
     let url = URL_SERVICIOS + '/person/' + id;
-    //url += '?token=' + this.token;
     return this.http.delete( url ,  { headers:new HttpHeaders().append('Authorization', `Bearer ${  localStorage.getItem('token') }`) } )
                 .map( resp => {
                   this.toastr.success( 'El person a sido eliminado correctamente', 'person BORRADO!',{ timeOut: 3000,positionClass: 'toast-top-right'});

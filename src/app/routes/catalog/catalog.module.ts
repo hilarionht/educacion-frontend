@@ -21,9 +21,9 @@ const routes: Routes = [
   { path: 'provinc', component: ProvinceComponent , canActivate: [LoginGuard]},
   { path: 'sector', component: SectorComponent , canActivate: [LoginGuard]},
   { path: 'ambit', component: AmbitComponent , canActivate: [LoginGuard]},
-  { path: 'catalog', component: CatalogComponent , canActivate: [LoginGuard]},
+  { path: 'catalog', component: CatalogComponent , canActivate: [LoginGuard], },
   { path: 'department/:id', component: DepartamentComponent , canActivate: [LoginGuard]},
-  { path: 'locality/:id', component: LocalityComponent , canActivate: [LoginGuard]}
+  { path: 'locality/:id/:provinceId', component: LocalityComponent , canActivate: [LoginGuard]}
 ];
 
 @NgModule({

@@ -7,7 +7,7 @@ export class User{
         public state: boolean, 
         public email: string,
         public image?:string,
-        public role?: any,
+        public role?: string,
         public role_id?:string,
         public id?: string
         ){

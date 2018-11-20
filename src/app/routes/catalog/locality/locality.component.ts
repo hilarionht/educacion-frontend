@@ -19,6 +19,8 @@ export class LocalityComponent implements OnInit {
   locality: Locality;
   id:any;
   depatmentid:string;
+
+  provinceId:string;
   department: Department;
   constructor(
     public _depService: DepartamentService,
@@ -31,6 +33,9 @@ export class LocalityComponent implements OnInit {
   ) { 
     this.routeActivate.params.subscribe( param => {
       this.id = param['id'];
+      this.provinceId = param['provinceId'];
+      console.log(param['provinceId']);
+      
       this.depatmentid = this.id;
       if(this.id){
         this.getLocalitys();
@@ -80,6 +85,8 @@ export class LocalityComponent implements OnInit {
   }
   getLocalitys(){
     this._localityService.listbyDepartment(this.depatmentid).subscribe((resp:any) => {
+      console.log(resp);
+      
       this.locality= resp.data[0];
       this.department = resp.data[0];
       this.localities = resp.data[0].localities;
@@ -119,5 +126,8 @@ export class LocalityComponent implements OnInit {
   }
   CloseModal(data:string, form?:NgForm){
     this.modalService.dismissAll(this.CloseModal);
+  }
+  departaments(){
+    this.router.navigate(['catalog/department',this.provinceId]);
   }
 }

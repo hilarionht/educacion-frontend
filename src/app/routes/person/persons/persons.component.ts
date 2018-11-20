@@ -25,8 +25,12 @@ export class PersonsComponent implements OnInit {
       this.persons = resp.data;
     });
   }
-  edit(person:Person){
-    this.router.navigate(['/user', person.id]);
+  edit(id:string){
+    console.log(id);
+    
+    this.router.navigate(['/person/person', id]);
   }
-
+  delete(id: string){
+    
+  }
 }

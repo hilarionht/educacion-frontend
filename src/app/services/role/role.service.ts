@@ -18,28 +18,31 @@ export class RoleService {
   ) { }
   create( role: Role ) {
     let url = URL_SERVICIOS + '/role';
-    console.log(' create role: ',role);
+    // console.log(' create role: ',role);
     return this.http.post(url, role ,  { headers:new HttpHeaders().append('Authorization', `Bearer ${  localStorage.getItem('token') }`)})
       .map((res: any) => {
-        this.toastr.success( "EL ROL " + role.name.toUpperCase +" FUE CREADO CON EXITO!" , 'CREACION DE ROL',{ timeOut: 3000,positionClass: 'toast-top-right'});
+        this.toastr.success( "EL ROL " + role.name.toUpperCase() +" FUE CREADO CON EXITO!" , 'CREACION DE ROL',{ timeOut: 3000,positionClass: 'toast-top-right'});
         return res.role;
       }).catch( err => {
         console.log(err, 'error en backend');
-        this.toastr.warning( err.error.errors.message , 'Error en generar la role!',{ timeOut: 3000,positionClass: 'toast-top-right'});
+        this.toastr.warning( err.errors.message , 'Error en generar la role!',{ timeOut: 3000,positionClass: 'toast-top-right'});
         return Observable.throw( err );
       });
   }
   update( role: Role ) {
 
     let url = URL_SERVICIOS + '/role';
-    console.log(url);
+    console.log('role form: ',role);
     
     return this.http.put( url, role ,  { headers:new HttpHeaders().append('Authorization', `Bearer ${  localStorage.getItem('token') }`) } )
                 .map( (resp: any) => {
-                  this.toastr.success( "EL ROL " +resp.name.toUpperCase + "FUE ACTUALIZADO CON EXITO!", 'ACTUALIZACION DE ROL',{ timeOut: 3000,positionClass: 'toast-top-right'});
+                  console.log(resp, 'in put');
+                  
+                  this.toastr.success( "EL ROL " + resp.data.name.toUpperCase() + "FUE ACTUALIZADO CON EXITO!", 'ACTUALIZACION DE ROL',{ timeOut: 3000,positionClass: 'toast-top-right'});
                   return true;
                 }).catch( err=> {
                   this.toastr.warning( "NO SE PUEDE ACTUALIZAR EL ROL!" , 'ACTUALIZACION DE ROL',{ timeOut: 3000,positionClass: 'toast-top-right'});
+                  console.log('error ',err);
                   return Observable.throw( err );
                 });
 
@@ -47,10 +50,10 @@ export class RoleService {
   
   get(id: string){
     let url = URL_SERVICIOS + '/role/' + id;
-    return this.http.get( url, { headers:new HttpHeaders().append('Authorization', `Bearer ${  localStorage.getItem('token') }`)} )
-                    .map((resp:any) => {
-                      resp.data
-                    });
+    return this.http.get( url, { headers:new HttpHeaders().append('Authorization', `Bearer ${  localStorage.getItem('token') }`)} );
+                    // .map((resp:any) => {
+                    //   return resp;
+                    // });
   }
 
   delete( id: string ) {

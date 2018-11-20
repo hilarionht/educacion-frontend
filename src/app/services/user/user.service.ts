@@ -136,11 +136,11 @@ export class UserService {
     
    return this.http.post(url, user ,  { headers:new HttpHeaders().append('Authorization', `Bearer ${  localStorage.getItem('token') }`)})
      .map((res: any) => {
-       this.toastr.success( user.username, 'Usuario Creado!',{ timeOut: 3000,positionClass: 'toast-top-right'});
+       this.toastr.success( 'El usuario: ' +user.username +' fue creado exitosamente!', 'Usuario Creado!',{ timeOut: 3000,positionClass: 'toast-top-right'});
        return res.user;
      }).catch( err => {
        console.log(err);
-       this.toastr.warning( err.error.errors.message , 'Error en creacion de user!',{ timeOut: 3000,positionClass: 'toast-top-right'});
+       this.toastr.warning( `No se puede generar el usuario con el nombre ${ user.username }, consulte con su administrador!`, 'Error en creacion de user!',{ timeOut: 3000,positionClass: 'toast-top-right'});
        return Observable.throw( err );
      });;
   }
@@ -154,7 +154,6 @@ export class UserService {
     console.log(url);
     return this.http.put( url, user ,  { headers:new HttpHeaders().append('Authorization', `Bearer ${  localStorage.getItem('token') }`) } )
                 .map( (resp: any) => {
-                  console.log('update....', resp);
                   if ( user.id === this.user.id ) {
                     let userDB: User = resp;
                     this.saveStorage( userDB.id, this.token, userDB , null);
@@ -176,5 +175,11 @@ export class UserService {
   list( desde: number = 0 ) {
     let url = URL_SERVICIOS + '/user';//?desde=' + desde;
     return this.http.get( url, { headers:new HttpHeaders().append('Authorization', `Bearer ${  localStorage.getItem('token') }`)} );
+  }
+  getById(id: string){
+    let url = URL_SERVICIOS + '/user/';
+    url +=`?filter={"relations":["role"],"where":{"id":${ id }}}`;
+    return this.http.get( url, { headers:new HttpHeaders().append('Authorization', `Bearer ${  localStorage.getItem('token') }`)} )
+                    .map(resp => resp);
   }
 }

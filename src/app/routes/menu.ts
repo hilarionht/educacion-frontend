@@ -29,17 +29,17 @@ const Institucion = {
             text: 'Provincia',
             role: [] = [1,2],
             link: '/catalog/provinc'
-        },
-        {
-            text: 'Departamento',
-            role: [] = [1,2],
-            link: '/catalog/departament'
-        },
-        {
-            text: 'Localidad',
-            role: [] = [1,2],
-            link: '/catalog/locality'
         }
+        // {
+        //     text: 'Departamento',
+        //     role: [] = [1,2],
+        //     link: '/catalog/departament'
+        // },
+        // {
+        //     text: 'Localidad',
+        //     role: [] = [1,2],
+        //     link: '/catalog/locality'
+        // }
     ]
 };
 
