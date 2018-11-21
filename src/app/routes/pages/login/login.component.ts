@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
             this.valForm.controls[c].markAsTouched();
         }
         if (this.valForm.valid) {
-            let user = new User( value.password, value.username, null,null,null,null,null,null,null,null);
+            let user = new User( value.username, value.password, null,null,null,null,null,null,null,null);
             this._userService.login(user).subscribe(() => this.router.navigate(['/']));
         }
     }

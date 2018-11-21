@@ -21,9 +21,7 @@ export class PersonsComponent implements OnInit {
     ) { }
 
   ngOnInit() {
-    this._personService.list().subscribe((resp:any) => {
-      this.persons = resp.data;
-    });
+    this.loadPersons();
   }
   edit(id:string){
     console.log(id);
@@ -31,6 +29,11 @@ export class PersonsComponent implements OnInit {
     this.router.navigate(['/person/person', id]);
   }
   delete(id: string){
-    
+    this._personService.delete(id).subscribe(()=>{ this.loadPersons(); });
+  }
+  loadPersons(){
+    this._personService.list().subscribe((resp:any) => {
+      this.persons = resp.data;
+    });
   }
 }

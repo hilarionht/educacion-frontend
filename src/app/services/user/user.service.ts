@@ -99,10 +99,10 @@ export class UserService {
                 }
                 
               }).catch( err => {
-                //console.log('22', err);                
-                this.toastr.warning( err.error.error, 'Error de login!',{ timeOut: 3000,positionClass: 'toast-top-right'});
+                console.log('22', err,user);                
+                this.toastr.warning( err.error.message, 'Error de acceso!',{ timeOut: 3000,positionClass: 'toast-top-right'});
                 //throw (new Error(err.error.error));
-                return Observable.throw( err.error.error );
+                return Observable.throw( err );
               });
   }
 
@@ -163,6 +163,11 @@ export class UserService {
                 });
   }
   delete(id:string){
+    if(this.user.id === id){
+      this.toastr.info('No se puede eliminar el usuario del actual.', 'ELIMINACIÓN DE USUARIO', { timeOut: 3000,positionClass: 'toast-top-right'});
+      return Observable.throw( new Error());
+      
+    }
     let url = URL_SERVICIOS + '/user/' + id;
     url += '?token=' + this.token;
     return this.http.delete( url )

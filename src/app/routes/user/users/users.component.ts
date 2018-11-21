@@ -54,11 +54,7 @@ export class UsersComponent implements OnInit {
     ) { }
 
   ngOnInit() {
-    this._userService.list().subscribe((resp:any)=> {
-      this.users =resp.data;
-      console.log(resp);
-      
-  });
+    this.loadUsers();
   }
   editUser(user:User){
 
@@ -67,8 +63,15 @@ export class UsersComponent implements OnInit {
 }
 deleteUser(id:string){
   this._userService.delete(id).subscribe((resp:any)=> {
-    this.users = resp
+    console.log(resp);
+    if(resp){
+      this.loadUsers();
+    }
   });
 }
-
+loadUsers(){
+  this._userService.list().subscribe((resp:any)=> {
+    this.users =resp.data;
+  });
+}
 }
