@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { URL_SERVICIOS } from '../../config/config';
+import { Observable } from 'rxjs';
 
 
 @Injectable()
@@ -17,26 +18,62 @@ export class RegionService {
     private toastr: ToastrService
   ) { }
 
-  getAll(){
-    let url = URL_SERVICIOS + '/region';//?desde=' + desde;
-    return this.http.get( url, { headers:new HttpHeaders().append('Authorization', `Bearer ${  localStorage.getItem('token') }`)} );
+  create( region: Region ) {
+    let url = URL_SERVICIOS + '/region';
+    return this.http.post(url, region ,  { headers:new HttpHeaders().append('Authorization', `Bearer ${  localStorage.getItem('token') }`)})
+      .map((res: any) => {
+        this.toastr.success( 'Provincia ' + region.name  + " fue creado con exito!", "CREACION DE REGION" ,{ enableHtml:true, timeOut: 3000,positionClass: 'toast-top-right'});
+        //this.toastr.success( 'Provincia ' + region.name  + " fue creado con exito!", "CREACION DE REGION" ,{ enableHtml:true, timeOut: 3000,positionClass: 'toast-top-right'});
+        return res.region;
+      }).catch( err => {
+        // console.log(err.error.message);
+        let errorcause = err.error.message;
+        if(errorcause.indexOf("Ya existe la llave")){
+          this.toastr.error( "NO SE PUEDE CREAR UN REGION CON EL NOMBRE: " + region.name.toUpperCase() + " YA EXISTENTE" , 'CREACION DE REGION',{ timeOut: 3000,positionClass: 'toast-top-right',closeButton:true});
+        }else{
+          this.toastr.error( "NO SE PUEDE CREAR UN REGION CON EL NOMBRE: " + region.name.toUpperCase() , 'CREACION DE REGION',{ timeOut: 3000,positionClass: 'toast-top-right'});
+        }
+        
+        return Observable.throw( err );
+      });
   }
-  addOrUpdate(){
+  
+  update( region: Region ) {
+
+    let url = URL_SERVICIOS + '/region';
     
-  }
-  update() {
-    let url = URL_SERVICIOS + '/region/' + this.region._id;
-    return this.http.put( url, this.region ,{ headers:new HttpHeaders().append('Authorization', `Bearer ${  localStorage.getItem('token') }`) } )
+    return this.http.put( url, region ,  { headers:new HttpHeaders().append('Authorization', `Bearer ${  localStorage.getItem('token') }`) } )
                 .map( (resp: any) => {
-                  this.toastr.success( this.region.nombre, 'region Actualizado!',{ timeOut: 3000 , positionClass: 'toast-top-right'});
+                  this.toastr.success( resp.nombre, 'region Actualizado!',{ timeOut: 3000,positionClass: 'toast-top-right'});
                   return true;
                 });
-  }
-  delete(){
 
   }
-  getById(){
+  
+  get(id: string){
+    let url = URL_SERVICIOS + '/region/' + id;
+    return this.http.get( url, { headers:new HttpHeaders().append('Authorization', `Bearer ${  localStorage.getItem('token') }`)} )
+                    .map(resp => resp);
+  }
 
+  delete( id: string ) {
+    let url = URL_SERVICIOS + '/region/' + id;
+    //url += '?token=' + this.token;
+    return this.http.delete( url ,  { headers:new HttpHeaders().append('Authorization', `Bearer ${  localStorage.getItem('token') }`) } )
+                .map( resp => {
+                  this.toastr.success( 'La Provincia a sido eliminado correctamente', 'Provincia BORRADO!',{ timeOut: 3000,positionClass: 'toast-top-right'});
+                  return true;
+                }).catch( err => {
+                  // console.log(err.error.message, 'error en backend');
+                  this.toastr.warning( "NO SE PUEDE ELIMINAR EL REGISTRO CONSULTE CON SU ADMINSTRADOR!" , 'ELIMINACION DE REGION',{ timeOut: 3000,positionClass: 'toast-top-right'});
+                  return Observable.throw( err );
+                });
+
+  }
+  
+  list( desde: number = 0 ) {
+    let url = URL_SERVICIOS + '/region';//?desde=' + desde;
+    return this.http.get( url, { headers:new HttpHeaders().append('Authorization', `Bearer ${  localStorage.getItem('token') }`)} );
   }
 
 }
