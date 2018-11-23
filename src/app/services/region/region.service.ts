@@ -22,11 +22,11 @@ export class RegionService {
     let url = URL_SERVICIOS + '/region';
     return this.http.post(url, region ,  { headers:new HttpHeaders().append('Authorization', `Bearer ${  localStorage.getItem('token') }`)})
       .map((res: any) => {
-        this.toastr.success( 'Provincia ' + region.name  + " fue creado con exito!", "CREACION DE REGION" ,{ enableHtml:true, timeOut: 3000,positionClass: 'toast-top-right'});
-        //this.toastr.success( 'Provincia ' + region.name  + " fue creado con exito!", "CREACION DE REGION" ,{ enableHtml:true, timeOut: 3000,positionClass: 'toast-top-right'});
+        this.toastr.success( 'Region ' + region.name  + " fue creado con exito!", "CREACION DE REGION" ,{ enableHtml:true, timeOut: 3000,positionClass: 'toast-top-right'});
+        //this.toastr.success( 'Region ' + region.name  + " fue creado con exito!", "CREACION DE REGION" ,{ enableHtml:true, timeOut: 3000,positionClass: 'toast-top-right'});
         return res.region;
       }).catch( err => {
-        // console.log(err.error.message);
+        //console.log(err, '<<<<< error');
         let errorcause = err.error.message;
         if(errorcause.indexOf("Ya existe la llave")){
           this.toastr.error( "NO SE PUEDE CREAR UN REGION CON EL NOMBRE: " + region.name.toUpperCase() + " YA EXISTENTE" , 'CREACION DE REGION',{ timeOut: 3000,positionClass: 'toast-top-right',closeButton:true});
@@ -61,7 +61,7 @@ export class RegionService {
     //url += '?token=' + this.token;
     return this.http.delete( url ,  { headers:new HttpHeaders().append('Authorization', `Bearer ${  localStorage.getItem('token') }`) } )
                 .map( resp => {
-                  this.toastr.success( 'La Provincia a sido eliminado correctamente', 'Provincia BORRADO!',{ timeOut: 3000,positionClass: 'toast-top-right'});
+                  this.toastr.success( 'La Region a sido eliminado correctamente', 'Region BORRADO!',{ timeOut: 3000,positionClass: 'toast-top-right'});
                   return true;
                 }).catch( err => {
                   // console.log(err.error.message, 'error en backend');

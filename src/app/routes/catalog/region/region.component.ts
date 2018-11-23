@@ -25,7 +25,6 @@ export class RegionComponent  {
     this.formRegion = new FormGroup({
       'id':new FormControl('0'),
       'name':new FormControl('',[Validators.required, 
-                                Validators.minLength(3),
                                 this.regionNoExist]),
       'createdAt': new FormControl(''),
       'updatedAt': new FormControl('')
@@ -33,22 +32,26 @@ export class RegionComponent  {
     this.loadRegions();
    }
   save($ev, value: any){
+    console.log(this.formRegion);
+    
     $ev.preventDefault();
         for (let c in this.formRegion.controls) {
             this.formRegion.controls[c].markAsTouched();
         }
         if (this.formRegion.valid) {
           if(this.formRegion.value.id ==='0'){
-            this._regionService.create(this.formRegion.value).subscribe(()=>{
-              this.formRegion.reset();
+            this._regionService.create(this.formRegion.value).subscribe(resp=>{
+              // this.formRegion.reset();
               this.loadRegions();
             });
           }else{
-            this._regionService.update(this.formRegion.value).subscribe(()=>{
-              this.formRegion.reset();
+            this._regionService.update(this.formRegion.value).subscribe(resp=>{
+              // this.formRegion.reset();
               this.loadRegions();
             });
+           
           }
+          this.formRegion.reset();
           this.modalService.dismissAll();
             // let user = new User( value.username, value.password, null,null,null,null,null,null,null,null);
             // this._userService.login(user).subscribe(() => this.router.navigate(['/']));
@@ -58,7 +61,13 @@ export class RegionComponent  {
   }
 
   open(content,id:string) {
-    this.region = new Region(null,'0',null)
+    this.formRegion = new FormGroup({
+      'id':new FormControl('0'),
+      'name':new FormControl('',[Validators.required, 
+                                this.regionNoExist]),
+      'createdAt': new FormControl(''),
+      'updatedAt': new FormControl('')
+    });
     if(id){
       this._regionService.get(id).subscribe((resp:any)=> this.region = resp.data);
     }
@@ -77,7 +86,8 @@ export class RegionComponent  {
   }
   delete(id:string){
     this._regionService.delete(id).subscribe((resp:any)=> { 
-       console.log(resp); this.loadRegions();
+       //console.log(resp); 
+       this.loadRegions();
     });
   }
   editbyid( content,id:string){

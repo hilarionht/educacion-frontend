@@ -54,9 +54,11 @@ export class ProvinceComponent implements OnInit {
     } else {
       form.value.name = form.value.name.toUpperCase();
       this._provService.create(form.value)
-        .subscribe(res => {
+        .subscribe(resp => {
           this.resetForm(form);
           this.getProvinces();
+          console.log('menues: ',resp);
+          
         });
     }
     this.modalService.dismissAll(this.CloseModal);
